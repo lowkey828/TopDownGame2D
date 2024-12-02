@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -26,6 +27,18 @@ public class PlayerController : MonoBehaviour
         handleMovement();
         handleAttack();
         handleBullet();
+    }
+
+    void FixedUpdate()
+    {
+        if (isAttacking == false)
+        {
+            rb.linearVelocity = movement * moveSpeed;
+        }
+        else
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
     }
 
     void handleMovement()
@@ -74,6 +87,25 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            StartCoroutine(banDan());
+        }
+    }
+
+    void StartAttack()
+    {
+        attackArea.SetActive(true);
+    }
+
+    void EndAttack()
+    {
+        isAttacking = false;
+        attackArea.SetActive(false);
+    }
+
+    IEnumerator banDan()
+    {
+        for (int i = 0; i < 4; i++)
+        {
             GameObject bullet = Instantiate(bulletPrefab, pulletArea.position, Quaternion.identity);
             Rigidbody2D rbBullet = bullet.GetComponent<Rigidbody2D>();
 
@@ -93,34 +125,16 @@ public class PlayerController : MonoBehaviour
             {
                 shootDirection = Vector2.down;
             }
+            else
+            {
+                shootDirection = Vector2.right;
+            }
 
             rbBullet.linearVelocity = shootDirection * bulletSpeed;
 
             Destroy(bullet, 0.5f);
+
+            yield return new WaitForSeconds(0.2f);
         }
-    }
-
-
-    void FixedUpdate()
-    {
-        if (isAttacking == false)
-        {
-            rb.linearVelocity = movement * moveSpeed;
-        }
-        else
-        {
-            rb.linearVelocity = Vector2.zero;
-        }
-    }
-
-    void StartAttack()
-    {
-        attackArea.SetActive(true);
-    }
-
-    void EndAttack()
-    {
-        isAttacking = false;
-        attackArea.SetActive(false);
     }
 }

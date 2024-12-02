@@ -51,14 +51,20 @@ TagManager:
   - name: River
     uniqueID: 4097294333
     locked: 0
+  - name: Decor
+    uniqueID: 4239078077
+    locked: 0
+  - name: Coin
+    uniqueID: 2719455459
+    locked: 0
   - name: Player
     uniqueID: 36719129
     locked: 0
   - name: Enemy
     uniqueID: 571055983
     locked: 0
-  - name: Decor
-    uniqueID: 4239078077
+  - name: Bom
+    uniqueID: 2079477553
     locked: 0
   - name: UI
     uniqueID: 362453787
